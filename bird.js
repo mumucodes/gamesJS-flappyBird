@@ -1,11 +1,17 @@
+const birdSprite = new Image();
+birdSprite.src = './spriteSheet-flappyBird.png';
+
 class Bird {
     constructor(){
         this.x = 150;
         this.y = 200;
         this.vy = 0;
-        this.width = 20;
-        this.height = 20;
+        this.originalWidth = 941;
+        this.originalHeight = 580;
+        this.width = this.originalWidth/20
+        this.height = this.originalHeight/20 ;
         this.weight = 1;
+        this.frameX = 0;
     }
     update(){
         let curve = Math.sin(angle) * 20;
@@ -27,9 +33,12 @@ class Bird {
     draw(){
         ctx.fillStyle = 'red';
         ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
+        ctx.drawImage(birdSprite, this.frameX * this.originalWidth, 0, this.originalWidth/4 , this.originalHeight, this.x, this.y - 5, this.width, this.height * 5);
+    } 
     flap(){
         this.vy -= 2;
+        if(this.frameX > 10) this.frameX = 0;
+        else this.frameX++; 
     }
 }
 const bird = new Bird();

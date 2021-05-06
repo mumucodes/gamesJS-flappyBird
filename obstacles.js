@@ -3,18 +3,23 @@ const obstaclesArray = [];
 class Obstacle{
     constructor(){
         this.top = (Math.random() * canvas.height/3) + 20;
-        this.bottom = (Math.random() * canvas.height/3) + 20;
+        this.bottom = (Math.random() * canvas.height/4) + 20;
         this.x = canvas.width;
         this.width = 20;
         this.color = 'hsla(' + hue + ',100%, 50%,)';
+        this.counted = false;
     }
-    draw(){
-        ctx.fillStyle = 'purple';
+    draw(){     
+        ctx.fillStyle = 'hsla(' + hue + ',100%, 50%,)';
         ctx.fillRect(this.x, 0, this.width, this.top,);
         ctx.fillRect(this.x, canvas.height - this.bottom, this.width, this.bottom);
     }
     update(){
         this.x -= gameSpeed;
+        if(!this.counted && this.x < bird.x){
+            score++;
+            this.counted = true;  
+        }
         this.draw();
     }
 }
